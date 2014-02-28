@@ -1,6 +1,6 @@
 var app = app || {};
 var ENTER_KEY = 13;
-var socket = io.connect('http://10.21.132.44:8080');
+var socket = io.connect('http://' + location.hostname + ':8080');
 
 app.conf = {};
 app.conf.username = undefined;
@@ -13,7 +13,6 @@ app.conf.touser = 'all';
     app.ViewBox = Backbone.View.extend({
         el : '#chatBox',
         events : {
-            'keyup #username' : 'inputName',
             'click #savename' : 'regName',
             'keyup #pubText' : 'pubText',
             'click #publish' : 'publish',
@@ -24,7 +23,7 @@ app.conf.touser = 'all';
             this.$input = this.$('#pubText');
             this.$all = this.$('.chatGroup li');
             this.listenTo(app.coll_users, 'add', this.renderUserOne);
-            this.listenTo(app.chatMsg, 'add', this.renderMsgOne);
+            this.listenTo(app.chatMsg, 'add', this.newMsg);
             this.usename = undefined;
 
             socket.on('regback', this.regCheck);
@@ -48,14 +47,33 @@ app.conf.touser = 'all';
             var that = this;
             $('#login').find('#savename').off().on('click', function() {
                 that.regName();
-            })
+            });
+            
+            $('#username').on('keyup',_inputName);
+            function _inputName(e){
+                that.inputName(e);
+            }
+            
+            
         },
         changeTar : function(data) {
             var that = $(data.target);
-            this.$('.chatListBox li').removeClass('active');
-            app.conf.touser = that.attr('username')||'all';
-            that.addClass('active');
-            this.$('.chatMain').html('');
+            if (that.attr('username') != app.conf.username) {
+                app.conf.touser = that.attr('username') || 'all';
+                this.$('.chatListBox li').removeClass('active');
+                that.addClass('active').removeClass('unread');
+                this.$('.chatMain').html('');
+                this.readerTo(app.conf.touser);
+                $('.chatBox title').html('CURRENT: ' + app.conf.touser);
+            } else {
+                this.$('.chatMain').html('<div>hum~ <br/> You want talk to yourself? <br/> that\'s sounds a little strange! <br/> <span style="color:red; font-weight:bold;">Try to talk with OTHERS~</span></div>')
+            }
+        },
+        readerTo : function(user) {
+            var msg = app.chatMsg.toUser(user);
+            for (var i = 0, len = msg.length; i < len; i++) {
+                this.renderMsgOne(msg[i])
+            }
         },
         delUser : function(data) {
             var mod = app.coll_users.findWhere({
@@ -101,11 +119,14 @@ app.conf.touser = 'all';
             }
         },
         pubtext : function() {
+            console.log(app.conf.touser);
             socket.emit('publish', {
                 username : app.conf.username,
                 touser : app.conf.touser,
                 text : this.$input.val()
-            })
+            });
+            this.$input.val('');
+            this.$input.focus();
         },
         inputName : function(e) {
             var key = e.keyCode;
@@ -148,12 +169,24 @@ app.conf.touser = 'all';
             this.$('ul.chatList').append(this.useView.render().$el);
             this.readerAll();
         },
+        newMsg : function(model) {
+            if ((model.toJSON().poster !== app.conf.touser) && (model.toJSON().poster !== app.conf.username)) {
+                $('.chatListBox li[username="' + model.toJSON().poster + '"]').addClass('unread');
+            }
+            this.renderMsgOne(model);
+        },
         renderMsgOne : function(model) {
-            if(model.toJSON().poster==app.conf.touser || app.conf.touser=='all'){
+            //if (true || model.toJSON().poster == app.conf.touser || model.toJSON().poster == app.conf.username || (model.toJSON().poster == app.conf.touser && app.conf.touser == 'all')) {
+            var isAll = (app.conf.touser == 'all') && (model.toJSON().touser == 'all');
+            var isPoster = (model.toJSON().poster == app.conf.username) && (model.toJSON().touser == app.conf.touser);
+            var isRecerver = (model.toJSON().poster == app.conf.touser) && (model.toJSON().touser == app.conf.username);
+
+            if (isAll || isPoster || isRecerver) {
                 this.msgView = new app.ViewChat({
                     model : model
                 });
                 this.$('.chatMain').append(this.msgView.reader().$el);
+                $('.chatMain').scrollTop($('.chatMain')[0].scrollHeight);
             }
         }
     });
@@ -161,17 +194,28 @@ app.conf.touser = 'all';
     //view for chat
     app.ViewUList = Backbone.View.extend({
         tagName : 'li',
-        template : _.template('<%- name %>'),
+        template : _.template('<span>unread</span><%- name %>'),
         initialize : function() {
             this.listenTo(this.model, 'remove', this.remove);
+            //this.listenTo(this.model, 'change', this.change);
         },
         render : function() {
             var json = this.model.toJSON();
             var html = this.template(json);
-            this.$el.attr('username', json.name)
+            this.$el.attr('username', json.name);
+            if (app.conf.username == json.name) {
+                this.$el.addClass('disabled')
+            }
             this.$el.html(html);
             return this;
         },
+        // change : function() {
+        // if (this.model.toJSON().unread) {
+        // this.$el.addClass('unread');
+        // } else {
+        // this.$el.removeClass('unread');
+        // }
+        // },
         remove : function() {
             this.$el.remove();
         }
@@ -213,7 +257,7 @@ app.conf.touser = 'all';
         toUser : function(username) {
             var username = username || 'all';
             return this.filter(function(list) {
-                return list.get('touser') == username;
+                return list.get('touser') == username || list.get('poster') == username;
             });
         }
     })

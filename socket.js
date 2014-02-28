@@ -31,23 +31,16 @@ io.sockets.on('connection', function(socket) {
                     });
                 }
             }
-        }
+        } 
     });
 
     socket.on('publish', function(data) {
-        var s = data.text.replace(/&/g, "&gt;");
-        s = s.replace(/</g, "&lt;");
-        s = s.replace(/>/g, "&gt;");
-        s = s.replace(/ /g, "&nbsp;");
-        s = s.replace(/\'/g, "&#39;");
-        s = s.replace(/\"/g, "&quot;");
-        s = s.replace(/\n/g, "<br>");
         if (data.touser == 'all') {
             for (i in user) {
                 user[i].socket.emit('receive', {
                     'poster' : data.username,
                     'touser' : data.touser,
-                    'text' : s
+                    'text' : data.text
                 });
             }
         } else {
@@ -55,13 +48,13 @@ io.sockets.on('connection', function(socket) {
                 user[data.touser].socket.emit('receive', {
                     'poster' : data.username,
                     'touser' : data.touser,
-                    'text' : s
+                    'text' : data.text
                 });
                 if (data.touser != data.poster) {
                     socket.emit('receive', {
                         'poster' : data.username,
                         'touser' : data.touser,
-                        'text' : s
+                        'text' : data.text
                     });
                 }
             }
