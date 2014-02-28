@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8">
+        <title>Socket</title>
+        <meta name="description" content="">
+        <meta name="author" content="Mofei">
+        <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="index.css" rel="stylesheet" type="text/css" />
+    </head>
+
+    <body>
+        <header>
+            This is a very beginning demo of Socket,built with Socket.io,Bootsrap.
+        </header>
+
+        <section class="chatBox" id="chatBox">
+            <title>CURRENT : Group</title>
+            <div class="chatListBox">
+                <ul class="chatGroup">
+                    <li class="active">
+                        All (0)
+                    </li>
+                </ul>
+                <ul class="chatList">
+                </ul>
+            </div>
+            <section class="chatMain">
+            </section>
+            <section class="chatPub">
+                <div class="input-group">
+                    <span class="input-group-addon">Guest:</span>
+                    <input type="text" class="form-control"  placeholder="Hello Word :)" id="pubText">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" id="publish">
+                            Publish!
+                        </button> </span>
+                </div><!-- /input-group -->
+            </section>
+        </section>
+
+        <div class="modal fade" id="login" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            &times;
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Login to the chat room</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-danger">
+                            <strong>Oh snap!</strong> You must choose you name before you use this system.
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon">Your name:</span>
+                            <input type="text" class="form-control" autofocus="true" placeholder="Mofei" autofocus="true" id="username">
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" id="savename">
+                                    Lat's Talk!
+                                </button> </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="bootstrap/js/jquery-1.10.2.min.js"></script>
+        <script src="bootstrap/js/bootstrap.min.js"></script>
+
+        <script src="socket.io.js"></script>
+        <script src="backbone/underscore.js"></script>
+        <script src="backbone/backbone.js"></script>
+        <script src="index.js"></script>
+    </body>
+</html>

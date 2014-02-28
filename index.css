@@ -1,0 +1,29 @@
+
+body {
+    background: #4E5359 repeat 0 0;
+    min-width:800px;
+}
+
+header { text-shadow: 0 1px 0 #5B5C5E; color:#242627; text-align:center; font-size: 14px; padding-top:30px; }
+
+.chatBox { width:800px; left:50%; margin-left:-400px; position: fixed; top:80px; bottom:80px; background:#fff; border-radius: 10px; overflow:hidden; box-shadow:4px 4px 8px #333;}
+.chatBox title { height:40px; line-height:40px; text-align:center; color:#fff; font-size:14px; background:-webkit-gradient(linear, left top,left bottom, from(#6B7888),to(#545E6A), color-stop(0.1,#6A7786),color-stop(0.5,#5E6977),color-stop(0.9,#56616D),color-stop(1.0,#545E6A)); display:block;}
+
+.chatListBox { position:absolute; top:40px; bottom:0px; width:250px; border-right:1px solid #ccc; margin:0; padding:0; background: #f4f4f4; box-shadow: -1px 0px 0px #fff inset;}
+.chatGroup { position:absolute; top:0px; height:40px; width:250px; border-right:1px solid #ccc; margin:0; padding:0; background: #f4f4f4; box-shadow: -1px 0px 0px #fff inset; }
+.chatList { position:absolute; top:40px; bottom:0px; width:250px; border-right:1px solid #ccc; margin:0; padding:0; background: #f4f4f4; box-shadow: -1px 0px 0px #fff inset; overflow-y:auto; }
+.chatGroup li,.chatList li {height:40px; line-height:40px; border-bottom:1px solid #ccc; text-indent:20px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden; box-shadow:0px 1px 0px #fff;}
+.chatGroup li.active,
+.chatGroup li:hover,
+.chatList li.active,
+.chatList li:hover {background: -webkit-gradient(linear, left top,left bottom, from(#8794A7),to(#717D93), color-stop(0.1,#8592A5),color-stop(0.5,#7A869C),color-stop(0.9,#737F95),color-stop(1.0,#717D93)); color:#fff; cursor:pointer;}
+
+.chatMain { position:absolute; top:40px; right:0; left:250px; bottom:60px; padding:10px; overflow-y:auto;}
+
+.chatPub { position:absolute; bottom:0; right:0; left:250px; height:60px; border-top:1px solid #ccc;background: #f4f4f4; padding:12px; }
+
+.chatbox { display:block; border-bottom:1px dotted #ddd; overflow:hidden; padding:10px;  }
+.chatbox .icon {font-weight:bold; line-height:30px;}
+.chatbox .text { max-width:580px; border: 1px solid #AFAFAF; box-shadow: 0px 1px 0px #D5D5D5;background: -webkit-gradient(linear, left top,left bottom, from(#F4F4F4),to(#E5E5E5), color-stop(0.1,#F3F3F3),color-stop(0.3,#F1F1F1),color-stop(0.5,#ECECEC),color-stop(0.7,#E9E9E9),color-stop(0.9,#E6E6E6),color-stop(1.0,#E5E5E5)); padding:5px; border-radius:5px; }
+.chat_mine .icon,.chat_mine .text {float:left; margin-right:10px; }
+.chat_other .icon,.chat_other .text { float:right; margin-left:10px; }
