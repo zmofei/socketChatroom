@@ -170,7 +170,7 @@ app.conf.touser = 'all';
             this.readerAll();
         },
         newMsg : function(model) {
-            if ((model.toJSON().poster !== app.conf.touser) && (model.toJSON().poster !== app.conf.username)) {
+            if ((model.toJSON().poster !== app.conf.touser) && (model.toJSON().poster !== app.conf.username) && (model.toJSON().poster !== 'all')) {
                 $('.chatListBox li[username="' + model.toJSON().poster + '"]').addClass('unread');
             }
             this.renderMsgOne(model);
