@@ -1,0 +1,23 @@
+{
+  "name": "socketChatroom",
+  "version": "1.0.0",
+  "description": "socketChatroom ==============",
+  "main": "index.js",
+  "dependencies": {
+    "socket.io": "^0.9.17"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zmofei/socketChatroom.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zmofei/socketChatroom/issues"
+  },
+  "homepage": "https://github.com/zmofei/socketChatroom"
+}

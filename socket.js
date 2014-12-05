@@ -2,12 +2,14 @@
 //  log : false
 //});
 
-var io = require('socket.io').listen(8080);
+var io = require('socket.io')(8280);
+
 
 var user = {};
 
 io.sockets.on('connection', function(socket) {
 
+    socket.store=socket.store||{};
     socket.on('reg', function(data) {
         if (user[data.username]) {
             socket.emit('regback', {
