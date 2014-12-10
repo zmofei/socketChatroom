@@ -9,6 +9,7 @@ header { text-shadow: 0 1px 0 #5B5C5E; color:#242627; text-align:center; font-si
 .chatBox { width:100%; max-width:800px;  position: fixed; top:80px; bottom:80px; background:#fff; border-radius: 10px; overflow:hidden; box-shadow:4px 4px 8px #333;}
 @media all and (min-width:800px) {
     .chatBox { width:800px; left:50%; margin-left:-400px; }
+    body{ max-width:100%;}
 }
 .chatBox title { height:40px; line-height:40px; text-align:center; color:#fff; font-size:14px; background:-webkit-gradient(linear, left top,left bottom, from(#6B7888),to(#545E6A), color-stop(0.1,#6A7786),color-stop(0.5,#5E6977),color-stop(0.9,#56616D),color-stop(1.0,#545E6A)); display:block;}
 

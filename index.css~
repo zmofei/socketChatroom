@@ -1,7 +1,7 @@
 
-body {
+body,html {
     background: #4E5359 repeat 0 0;
-    min-width:800px;
+    width:100%;
 }
 
 header { text-shadow: 0 1px 0 #5B5C5E; color:#242627; text-align:center; font-size: 14px; padding-top:30px; }
